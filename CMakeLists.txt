@@ -34,3 +34,6 @@ add_executable(d3p2 day3/part2.cpp)
 target_link_libraries(d3p2 PRIVATE ctre::ctre)
 target_link_libraries(d3p2 PRIVATE fmt::fmt)
 
+add_executable(d4p1 day4/part1.cpp)
+target_link_libraries(d4p1 PRIVATE fmt::fmt)
+
