@@ -11,3 +11,26 @@ target_link_libraries(d1p1 PRIVATE fmt::fmt)
 
 add_executable(d1p2 day1/part2.cpp)
 target_link_libraries(d1p2 PRIVATE fmt::fmt)
+
+add_executable(d2p1 day2/part1.cpp)
+target_link_libraries(d2p1 PRIVATE fmt::fmt)
+
+add_executable(d2p2 day2/part2.cpp)
+target_link_libraries(d2p2 PRIVATE fmt::fmt)
+
+include(FetchContent)
+FetchContent_Declare(
+  ctre
+  GIT_REPOSITORY https://github.com/hanickadot/compile-time-regular-expressions.git
+  GIT_TAG v3.7  # Replace with the desired version
+)
+FetchContent_MakeAvailable(ctre)
+
+add_executable(d3p1 day3/part1.cpp)
+target_link_libraries(d3p1 PRIVATE ctre::ctre)
+target_link_libraries(d3p1 PRIVATE fmt::fmt)
+
+add_executable(d3p2 day3/part2.cpp)
+target_link_libraries(d3p2 PRIVATE ctre::ctre)
+target_link_libraries(d3p2 PRIVATE fmt::fmt)
+
