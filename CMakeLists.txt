@@ -37,3 +37,6 @@ target_link_libraries(d3p2 PRIVATE fmt::fmt)
 add_executable(d4p1 day4/part1.cpp)
 target_link_libraries(d4p1 PRIVATE fmt::fmt)
 
+add_executable(d4p2 day4/part2.cpp)
+target_link_libraries(d4p2 PRIVATE fmt::fmt)
+
