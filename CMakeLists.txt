@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 
 project(AOC24 VERSION 0.0.0)
+include_directories(util)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -40,4 +41,12 @@ target_link_libraries(d4p1 PRIVATE fmt::fmt)
 
 add_executable(d4p2 day4/part2.cpp)
 target_link_libraries(d4p2 PRIVATE fmt::fmt)
+
+add_executable(d5p1 day5/part1.cpp)
+target_link_libraries(d5p1 PRIVATE ctre::ctre)
+target_link_libraries(d5p1 PRIVATE fmt::fmt)
+
+add_executable(d5p2 day5/part2.cpp)
+target_link_libraries(d5p2 PRIVATE ctre::ctre)
+target_link_libraries(d5p2 PRIVATE fmt::fmt)
 
