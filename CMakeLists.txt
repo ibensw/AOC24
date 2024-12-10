@@ -50,3 +50,9 @@ add_executable(d5p2 day5/part2.cpp)
 target_link_libraries(d5p2 PRIVATE ctre::ctre)
 target_link_libraries(d5p2 PRIVATE fmt::fmt)
 
+add_executable(d6p1 day6/part1.cpp)
+target_link_libraries(d6p1 PRIVATE fmt::fmt)
+
+add_executable(d6p2 day6/part2.cpp)
+target_link_libraries(d6p2 PRIVATE fmt::fmt)
+
