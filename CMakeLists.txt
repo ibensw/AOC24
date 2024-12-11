@@ -64,3 +64,9 @@ add_executable(d7p2 day7/part2.cpp)
 target_link_libraries(d7p2 PRIVATE ctre::ctre)
 target_link_libraries(d7p2 PRIVATE fmt::fmt)
 
+add_executable(d8p1 day8/part1.cpp)
+target_link_libraries(d8p1 PRIVATE fmt::fmt)
+
+add_executable(d8p2 day8/part2.cpp)
+target_link_libraries(d8p2 PRIVATE fmt::fmt)
+
