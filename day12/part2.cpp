@@ -1,5 +1,6 @@
 #include "readfile.h"
 #include "table.h"
+#include <algorithm>
 #include <fmt/format.h>
 #include <fmt/ranges.h>
 #include <set>
@@ -45,10 +46,11 @@ struct Region {
     std::size_t perimeter;
 };
 
+using Fence = std::pair<Point, Point>; // direction, location
+
 Region sweepRegion(const Table &table, BoolTable &visited, Point start)
 {
-    std::set<Point> hFences;
-    std::set<Point> vFences;
+    std::set<Fence> fences;
     auto value = table.get(start);
     Region region{value};
     std::set<Point> toExplore{start};
@@ -69,25 +71,26 @@ Region sweepRegion(const Table &table, BoolTable &visited, Point start)
                 }
             } else {
                 if (direction.x == 0) {
-                    Point fence = {location.x, location.y + (direction.y == 1 ? 1 : 0)};
-
-                    if (!vFences.contains({fence.x + 1, fence.y}) && !vFences.contains({fence.x - 1, fence.y})) {
-                        region.perimeter++;
-                    }
-
-                    vFences.insert(fence);
+                    Point fence = {location.y + (direction.y == 1 ? 1 : 0), location.x};
+                    fences.insert({direction, fence});
                 } else {
                     Point fence = {location.x + (direction.x == 1 ? 1 : 0), location.y};
-
-                    if (!hFences.contains({fence.x, fence.y + 1}) && !hFences.contains({fence.x, fence.y - 1})) {
-                        region.perimeter++;
-                    }
-
-                    hFences.insert(fence);
+                    fences.insert({direction, fence});
                 }
             }
         }
     }
+
+    Fence last{{0, 0}, {}};
+    for (const auto &entry : fences) {
+        const auto &[direction, fence] = entry;
+        if (direction != last.first || fence.x != last.second.x || fence.y != last.second.y + 1) {
+            region.perimeter++;
+        }
+        last = entry;
+    }
+    fmt::print("Region {}: Area={}, Perimeter={}\n", region.id, region.area, region.perimeter);
+
     return region;
 }
 
@@ -105,19 +108,6 @@ std::vector<Region> findRegions(const Table &table)
     return regions;
 }
 
-// unsigned long countFences(const std::set<Point> &segments)
-// {
-//     for (auto start = segments.begin(); start != segments.end(); ++start) {
-//         auto test = start;
-//         for (++test; test != segments.end(); ++test) {
-//             bool xByOne = (start->x - test->x == 1) || (test->x - start->x == 1);
-//             bool yByOne = (start->y - test->y == 1) || (test->y - start->y == 1);
-//             if (xByOne ^ yByOne) {
-//             }
-//         }
-//     }
-// }
-
 int main(int argc, char *argv[])
 {
     auto input = readFile(argv[1]);
@@ -128,8 +118,11 @@ int main(int argc, char *argv[])
     unsigned long long totalCost = 0;
 
     for (const auto &region : regions) {
-        fmt::print("Region {}: Area={}, Perimeter={}\n", region.id, region.area, region.perimeter);
+        auto backup = totalCost;
         totalCost += region.area * region.perimeter;
+        if (totalCost < backup) {
+            throw std::runtime_error("Overflow detected");
+        }
     }
 
     fmt::print("Total cost: {}\n", totalCost);

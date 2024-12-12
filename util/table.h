@@ -29,6 +29,14 @@ bool operator<(const Point &a, const Point &b) noexcept
     }
     return a.x < b.x;
 }
+bool operator==(const Point &a, const Point &b) noexcept
+{
+    return a.x == b.x && a.y == b.y;
+}
+bool operator!=(const Point &a, const Point &b) noexcept
+{
+    return !(a == b);
+}
 
 static constexpr Point UP = {0, static_cast<std::size_t>(-1)};
 static constexpr Point DOWN = {0, 1};
