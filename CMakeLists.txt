@@ -94,3 +94,10 @@ target_link_libraries(d12p1 PRIVATE fmt::fmt)
 add_executable(d12p2 day12/part2.cpp)
 target_link_libraries(d12p2 PRIVATE fmt::fmt)
 
+add_executable(d13p1 day13/part1.cpp)
+target_link_libraries(d13p1 PRIVATE fmt::fmt)
+target_link_libraries(d13p1 PRIVATE ctre::ctre)
+
+add_executable(d13p2 day13/part2.cpp)
+target_link_libraries(d13p2 PRIVATE fmt::fmt)
+target_link_libraries(d13p2 PRIVATE ctre::ctre)

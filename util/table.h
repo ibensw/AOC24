@@ -14,11 +14,11 @@ Point operator-(Point a, Point b)
 {
     return {a.x - b.x, a.y - b.y};
 }
-Point operator*(Point a, int b)
+Point operator*(Point a, std::size_t b)
 {
     return {a.x * b, a.y * b};
 }
-Point operator*(int a, Point b)
+Point operator*(std::size_t a, Point b)
 {
     return b * a;
 }
@@ -36,6 +36,18 @@ bool operator==(const Point &a, const Point &b) noexcept
 bool operator!=(const Point &a, const Point &b) noexcept
 {
     return !(a == b);
+}
+Point &operator+=(Point &a, const Point &b)
+{
+    a.x += b.x;
+    a.y += b.y;
+    return a;
+}
+Point &operator-=(Point &a, const Point &b)
+{
+    a.x -= b.x;
+    a.y -= b.y;
+    return a;
 }
 
 static constexpr Point UP = {0, static_cast<std::size_t>(-1)};
