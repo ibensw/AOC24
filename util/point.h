@@ -41,7 +41,7 @@ template <typename T = std::size_t> struct Point {
     {
         x += other.x;
         y += other.y;
-        return this;
+        return *this;
     }
     Point &operator-=(Point other)
     {
