@@ -6,9 +6,9 @@
 #include <set>
 
 struct Input {
-    Point a;
-    Point b;
-    Point price;
+    Point<> a;
+    Point<> b;
+    Point<> price;
 };
 
 std::vector<Input> parseInput(const RawData &data)

@@ -5,14 +5,14 @@
 #include <fmt/ranges.h>
 #include <set>
 
-template <> class fmt::formatter<Point>
+template <typename T> class fmt::formatter<Point<T>>
 {
   public:
     constexpr auto parse(format_parse_context &ctx)
     {
         return ctx.begin();
     }
-    template <typename Context> constexpr auto format(const Point &foo, Context &ctx) const
+    template <typename Context> constexpr auto format(const Point<T> &foo, Context &ctx) const
     {
         return format_to(ctx.out(), "({},{})", foo.x, foo.y);
     }
@@ -46,14 +46,14 @@ struct Region {
     std::size_t perimeter;
 };
 
-using Fence = std::pair<Point, Point>; // direction, location
+using Fence = std::pair<Point<>, Point<>>; // direction, location
 
-Region sweepRegion(const Table &table, BoolTable &visited, Point start)
+Region sweepRegion(const Table &table, BoolTable &visited, Point<> start)
 {
     std::set<Fence> fences;
     auto value = table.get(start);
     Region region{value};
-    std::set<Point> toExplore{start};
+    std::set<Point<>> toExplore{start};
     fmt::print("Region {} found at {}, {}\n", value, start.x, start.y);
     while (!toExplore.empty()) {
         auto current = toExplore.begin();
@@ -63,18 +63,18 @@ Region sweepRegion(const Table &table, BoolTable &visited, Point start)
         visited.set(location.x, location.y, true);
         region.area++;
 
-        for (const auto &direction : {UP, DOWN, LEFT, RIGHT}) {
-            Point neighbor = location + direction;
+        for (const auto &direction : {Point<>::UP, Point<>::DOWN, Point<>::LEFT, Point<>::RIGHT}) {
+            Point<> neighbor = location + direction;
             if (table.contains(neighbor) && table.get(neighbor) == value) {
                 if (!visited.get(neighbor.x, neighbor.y)) {
                     toExplore.insert(neighbor);
                 }
             } else {
                 if (direction.x == 0) {
-                    Point fence = {location.y + (direction.y == 1 ? 1 : 0), location.x};
+                    Point<> fence = {location.y + (direction.y == 1 ? 1 : 0), location.x};
                     fences.insert({direction, fence});
                 } else {
-                    Point fence = {location.x + (direction.x == 1 ? 1 : 0), location.y};
+                    Point<> fence = {location.x + (direction.x == 1 ? 1 : 0), location.y};
                     fences.insert({direction, fence});
                 }
             }

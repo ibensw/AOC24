@@ -31,11 +31,11 @@ struct Region {
     std::size_t perimeter{0};
 };
 
-Region sweepRegion(const Table &table, BoolTable &visited, Point start)
+Region sweepRegion(const Table &table, BoolTable &visited, Point<> start)
 {
     auto value = table.get(start);
     Region region{value};
-    std::set<Point> toExplore{start};
+    std::set<Point<>> toExplore{start};
     fmt::print("Region {} found at {}, {}\n", value, start.x, start.y);
     while (!toExplore.empty()) {
         auto current = toExplore.begin();
@@ -46,8 +46,8 @@ Region sweepRegion(const Table &table, BoolTable &visited, Point start)
         region.area++;
         region.perimeter += 4; // this is overkill ofcourse
 
-        for (const auto &direction : {UP, DOWN, LEFT, RIGHT}) {
-            Point neighbor = location + direction;
+        for (const auto &direction : {Point<>::UP, Point<>::DOWN, Point<>::LEFT, Point<>::RIGHT}) {
+            Point<> neighbor = location + direction;
             if (table.contains(neighbor) && table.get(neighbor) == value) {
                 region.perimeter--;
                 if (!visited.get(neighbor.x, neighbor.y)) {

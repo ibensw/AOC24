@@ -8,9 +8,9 @@
 #include <utility>
 
 struct Input {
-    Point a;
-    Point b;
-    Point price;
+    Point<> a;
+    Point<> b;
+    Point<> price;
 };
 
 std::vector<Input> parseInput(const RawData &data)
@@ -63,13 +63,13 @@ bool simplify(Input &i)
     return simplify(i.a.x, i.b.x, i.price.x) && simplify(i.a.y, i.b.y, i.price.y);
 }
 
-Point reduceLine(Point diff, Point b)
+Point<> reduceLine(Point<> diff, Point<> b)
 {
     auto moveTimes = std::min(b.x / diff.x, b.y / diff.y);
     return b - moveTimes * diff;
 }
 
-unsigned long solveMachinePart(Point a2, Point b1, Point b2)
+unsigned long solveMachinePart(Point<> a2, Point<> b1, Point<> b2)
 {
     long determinant = a2.x * (b2.y - b1.y);
     determinant -= a2.y * (b2.x - b1.x);

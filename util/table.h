@@ -1,59 +1,7 @@
 #pragma once
 
+#include "point.h"
 #include <vector>
-
-struct Point {
-    std::size_t x;
-    std::size_t y;
-};
-Point operator+(Point a, Point b)
-{
-    return {a.x + b.x, a.y + b.y};
-}
-Point operator-(Point a, Point b)
-{
-    return {a.x - b.x, a.y - b.y};
-}
-Point operator*(Point a, std::size_t b)
-{
-    return {a.x * b, a.y * b};
-}
-Point operator*(std::size_t a, Point b)
-{
-    return b * a;
-}
-bool operator<(const Point &a, const Point &b) noexcept
-{
-    if (a.x == b.x) {
-        return a.y < b.y;
-    }
-    return a.x < b.x;
-}
-bool operator==(const Point &a, const Point &b) noexcept
-{
-    return a.x == b.x && a.y == b.y;
-}
-bool operator!=(const Point &a, const Point &b) noexcept
-{
-    return !(a == b);
-}
-Point &operator+=(Point &a, const Point &b)
-{
-    a.x += b.x;
-    a.y += b.y;
-    return a;
-}
-Point &operator-=(Point &a, const Point &b)
-{
-    a.x -= b.x;
-    a.y -= b.y;
-    return a;
-}
-
-static constexpr Point UP = {0, static_cast<std::size_t>(-1)};
-static constexpr Point DOWN = {0, 1};
-static constexpr Point LEFT = {static_cast<std::size_t>(-1), 0};
-static constexpr Point RIGHT = {1, 0};
 
 class Table
 {
@@ -76,7 +24,7 @@ class Table
     {
         return x < width && y < height;
     }
-    inline bool contains(Point p) const noexcept
+    inline bool contains(Point<> p) const noexcept
     {
         return contains(p.x, p.y);
     }
@@ -90,11 +38,11 @@ class Table
         return data[y * (width + 1) + x];
     }
 
-    inline char &get(Point p) noexcept
+    inline char &get(Point<> p) noexcept
     {
         return get(p.x, p.y);
     }
-    inline char get(Point p) const noexcept
+    inline char get(Point<> p) const noexcept
     {
         return get(p.x, p.y);
     }
