@@ -114,3 +114,7 @@ add_executable(d15p1 day15/part1.cpp)
 target_link_libraries(d15p1 PRIVATE fmt::fmt)
 target_link_libraries(d15p1 PRIVATE ctre::ctre)
 
+add_executable(d15p2 day15/part2.cpp)
+target_link_libraries(d15p2 PRIVATE fmt::fmt)
+target_link_libraries(d15p2 PRIVATE ctre::ctre)
+
