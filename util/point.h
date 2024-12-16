@@ -62,6 +62,11 @@ template <typename T = std::size_t> struct Point {
         return *this;
     }
 
+    template <typename U> operator Point<U>() const
+    {
+        return {static_cast<U>(x), static_cast<U>(y)};
+    }
+
     static constexpr Point UP = {0, static_cast<T>(-1)};
     static constexpr Point DOWN = {0, 1};
     static constexpr Point LEFT = {static_cast<T>(-1), 0};
